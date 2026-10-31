@@ -1,0 +1,25 @@
+# Start with a lightweight Python image
+FROM python:3.12-slim
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Install CPU-only PyTorch
+RUN pip install --no-cache-dir \
+    --index-url https://download.pytorch.org/whl/cpu \
+    torch
+
+# Copy and install the remaining dependencies
+COPY requirements-api.txt .
+RUN pip install --no-cache-dir -r requirements-api.txt
+
+# Copy the application code and trained model artifacts
+COPY src/ ./src/
+COPY api/ ./api/
+COPY models/ ./models/
+
+# FastAPI listens on port 8000
+EXPOSE 8000
+
+# Start the API server
+CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]

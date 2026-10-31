@@ -1,6 +1,12 @@
 import streamlit as st
 import requests
 
+import os
+
+API_URL = os.getenv(
+    "API_URL",
+    "http://127.0.0.1:8000/predict"
+)
 
 # -------------------------
 # Page configuration
@@ -236,7 +242,7 @@ if classify_clicked:
             with st.spinner("Analyzing article..."):
 
                 response = requests.post(
-                    "http://127.0.0.1:8000/predict",
+                    API_URL,
                     json={"text": article},
                     timeout=30
                 )
