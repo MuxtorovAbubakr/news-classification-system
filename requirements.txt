@@ -7,3 +7,7 @@ matplotlib
 seaborn
 torch
 joblib
+fastapi
+uvicorn
+streamlit
+requests
